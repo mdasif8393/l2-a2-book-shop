@@ -30,8 +30,16 @@ const getBookById = async (_id: string) => {
   return result;
 };
 
+const updateABook = async (_id: string, book: Partial<IBook>) => {
+  console.log();
+  const result = await Book.findOneAndUpdate({ _id }, book);
+
+  return result;
+};
+
 export const BookServices = {
   createBook,
   getAllBooks,
   getBookById,
+  updateABook,
 };

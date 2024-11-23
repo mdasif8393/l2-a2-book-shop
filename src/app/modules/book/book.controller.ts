@@ -59,8 +59,29 @@ const getBookById = async (req: Request, res: Response) => {
   }
 };
 
+const updateABook = async (req: Request, res: Response) => {
+  try {
+    const book = req.body;
+    const { productId } = req.params;
+
+    const result = await BookServices.updateABook(productId, book);
+    res.status(200).json({
+      success: true,
+      message: "Book updated successfully",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+      error: err,
+    });
+  }
+};
+
 export const BookControllers = {
   createBook,
   getAllBooks,
   getBookById,
+  updateABook,
 };
