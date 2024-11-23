@@ -21,6 +21,26 @@ const createBook = async (req: Request, res: Response) => {
   }
 };
 
+const getAllBooks = async (req: Request, res: Response) => {
+  try {
+    const { searchTerm } = req.query;
+
+    const result = await BookServices.getAllBooks(searchTerm as string);
+    res.status(200).json({
+      success: true,
+      message: "Books retrieved successfully",
+      data: result,
+    });
+  } catch (err: any) {
+    res.sendStatus(500).json({
+      success: false,
+      message: err.message,
+      error: err,
+    });
+  }
+};
+
 export const BookControllers = {
   createBook,
+  getAllBooks,
 };
