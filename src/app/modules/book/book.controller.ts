@@ -79,9 +79,30 @@ const updateABook = async (req: Request, res: Response) => {
   }
 };
 
+const deleteABook = async (req: Request, res: Response) => {
+  try {
+    console.log(req.params);
+    const { productId } = req.params;
+
+    const result = await BookServices.deleteABook(productId);
+    res.status(200).json({
+      success: true,
+      message: "Book deleted successfully",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+      error: err,
+    });
+  }
+};
+
 export const BookControllers = {
   createBook,
   getAllBooks,
   getBookById,
   updateABook,
+  deleteABook,
 };

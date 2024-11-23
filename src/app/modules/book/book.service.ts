@@ -37,9 +37,16 @@ const updateABook = async (_id: string, book: Partial<IBook>) => {
   return result;
 };
 
+const deleteABook = async (_id: string) => {
+  console.log(_id);
+  const result = await Book.findByIdAndDelete({ _id });
+  return result;
+};
+
 export const BookServices = {
   createBook,
   getAllBooks,
   getBookById,
   updateABook,
+  deleteABook,
 };
