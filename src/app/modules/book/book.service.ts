@@ -7,9 +7,9 @@ const createBook = async (book: IBook) => {
 };
 
 const getAllBooks = async (searchTerm: string) => {
-  console.log(searchTerm);
   let result;
   if (searchTerm) {
+    // use $or operator to search in every field
     result = await Book.find({
       $or: [
         { title: { $eq: searchTerm } },
@@ -24,7 +24,14 @@ const getAllBooks = async (searchTerm: string) => {
   return result;
 };
 
+const getBookById = async (_id: string) => {
+  const result = await Book.findById({ _id });
+
+  return result;
+};
+
 export const BookServices = {
   createBook,
   getAllBooks,
+  getBookById,
 };
