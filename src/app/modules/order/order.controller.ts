@@ -7,13 +7,13 @@ const createOrder = async (req: Request, res: Response) => {
     const result = await OrderServices.createOrder(order);
 
     res.status(200).json({
-      success: true,
+      status: true,
       message: "Order created successfully",
       data: result,
     });
   } catch (err: any) {
     res.status(500).json({
-      success: false,
+      status: false,
       message: err.message,
       error: err,
     });
@@ -25,7 +25,7 @@ const calculateRevenue = async (req: Request, res: Response) => {
     const result = await OrderServices.calculateRevenue();
 
     res.status(200).json({
-      success: true,
+      status: true,
       message: "Revenue calculated successfully",
       data: {
         totalRevenue: result,
@@ -33,7 +33,7 @@ const calculateRevenue = async (req: Request, res: Response) => {
     });
   } catch (err: any) {
     res.status(500).json({
-      success: false,
+      status: false,
       message: err.message,
       error: err,
     });
