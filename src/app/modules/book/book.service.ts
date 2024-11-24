@@ -37,9 +37,8 @@ const updateABook = async (_id: string, book: Partial<IBook>) => {
   return result;
 };
 
-const deleteABook = async (_id: string) => {
-  console.log(_id);
-  const result = await Book.findByIdAndDelete({ _id });
+const deleteABook = async (productId: string) => {
+  const result = await Book.findOneAndDelete({ _id: productId });
   return result;
 };
 

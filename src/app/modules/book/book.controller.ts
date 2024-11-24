@@ -81,7 +81,6 @@ const updateABook = async (req: Request, res: Response) => {
 
 const deleteABook = async (req: Request, res: Response) => {
   try {
-    console.log(req.params);
     const { productId } = req.params;
 
     const result = await BookServices.deleteABook(productId);
