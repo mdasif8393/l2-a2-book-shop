@@ -1,3 +1,4 @@
+import QueryBuilder from "../../builder/QueryBuilder";
 import { IBook } from "./book.interface";
 import { Book } from "./book.model";
 
@@ -6,22 +7,35 @@ const createBook = async (book: IBook) => {
   return result;
 };
 
-const getAllBooks = async (searchTerm: string) => {
-  let result;
-  if (searchTerm) {
-    // use $or operator to search in every field
-    result = await Book.find({
-      $or: [
-        { title: { $eq: searchTerm } },
-        { author: { $eq: searchTerm } },
-        { category: { $eq: searchTerm } },
-      ],
-    });
-  } else {
-    result = await Book.find({});
-  }
+const getAllBooks = async (query: Record<string, unknown>) => {
+  // let result;
+  // if (searchTerm) {
+  //   // use $or operator to search in every field
+  //   result = await Book.find({
+  //     $or: [
+  //       { title: { $eq: searchTerm } },
+  //       { author: { $eq: searchTerm } },
+  //       { category: { $eq: searchTerm } },
+  //     ],
+  //   });
+  // } else {
+  //   result = await Book.find({});
+  // }
 
-  return result;
+  const booksQuery = new QueryBuilder(Book.find(), query)
+    .search(["title", "author", "category"])
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await booksQuery.modelQuery;
+  const meta = await booksQuery.countTotal();
+
+  return {
+    meta,
+    result,
+  };
 };
 
 const getBookById = async (_id: string) => {
