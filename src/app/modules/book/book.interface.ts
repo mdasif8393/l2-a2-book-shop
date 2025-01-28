@@ -10,6 +10,7 @@ export interface IBook {
     | "Religious"
     | "SelfDevelopment";
   description: string;
-  quantity: number;
+  stockQuantity: number;
   inStock: boolean;
+  image: "string";
 }

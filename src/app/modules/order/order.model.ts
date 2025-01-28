@@ -5,7 +5,7 @@ import { IOrder, OrderModel } from "./order.interface";
 const orderSchema = new Schema<IOrder, OrderModel>({
   email: { type: String, required: true },
   product: { type: String, required: true },
-  quantity: { type: Number, required: true },
+  stockQuantity: { type: Number, required: true },
   totalPrice: { type: Number, required: true },
 });
 
@@ -13,7 +13,7 @@ orderSchema.statics.isProductExists = async function (orderData: IOrder) {
   // update product inStock field false if quantity <= 0
   await Book.updateMany(
     {
-      quantity: { $lte: 0 },
+      stockQuantity: { $lte: 0 },
     },
     {
       inStock: false,
@@ -29,10 +29,10 @@ orderSchema.statics.isProductExists = async function (orderData: IOrder) {
   } else if (
     !(await Book.findOne({
       _id: orderData.product,
-      quantity: { $gte: orderData.quantity },
+      stockQuantity: { $gte: orderData.stockQuantity },
     }))
   ) {
-    throw new Error("Insufficient quantity available in inventory");
+    throw new Error("Insufficient stockQuantity available in inventory");
   }
 
   // decrease product quantity
@@ -41,11 +41,11 @@ orderSchema.statics.isProductExists = async function (orderData: IOrder) {
       {
         $and: [
           { _id: orderData.product },
-          { quantity: { $gt: 0 } },
-          { quantity: { $gte: orderData.quantity } },
+          { stockQuantity: { $gt: 0 } },
+          { stockQuantity: { $gte: orderData.stockQuantity } },
         ],
       },
-      { $inc: { quantity: -orderData.quantity } }
+      { $inc: { stockQuantity: -orderData.stockQuantity } }
     );
     return existingProduct;
   }

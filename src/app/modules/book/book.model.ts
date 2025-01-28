@@ -11,8 +11,9 @@ const bookSchema = new Schema<IBook>(
       enum: ["Fiction", "Poetry", "Religious", "Science", "SelfDevelopment"],
     },
     description: { type: String, required: true },
-    quantity: { type: Number, required: true },
+    stockQuantity: { type: Number, required: true },
     inStock: { type: Boolean, required: true },
+    image: { type: String, required: true },
   },
   {
     timestamps: true,

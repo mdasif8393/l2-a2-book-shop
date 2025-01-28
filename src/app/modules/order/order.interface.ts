@@ -3,7 +3,7 @@ import { Model } from "mongoose";
 export interface IOrder {
   email: string;
   product: string;
-  quantity: number;
+  stockQuantity: number;
   totalPrice: number;
 }
 
