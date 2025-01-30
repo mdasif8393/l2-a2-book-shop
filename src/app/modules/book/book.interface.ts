@@ -2,13 +2,7 @@ export interface IBook {
   title: string;
   author: string;
   price: number;
-  category:
-    | "Fiction"
-    | "Science"
-    | "Fiction"
-    | "Poetry"
-    | "Religious"
-    | "SelfDevelopment";
+  category: string;
   description: string;
   stockQuantity: number;
   inStock: boolean;

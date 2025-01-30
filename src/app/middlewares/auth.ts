@@ -22,6 +22,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
       token,
       config.jwt_access_secret as string
     ) as JwtPayload;
+    console.log(decoded);
 
     const { role, email } = decoded;
 

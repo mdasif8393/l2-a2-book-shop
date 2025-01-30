@@ -1,10 +1,13 @@
 import { Model } from "mongoose";
 
 export interface IOrder {
+  name: string;
   email: string;
-  product: string;
-  stockQuantity: number;
+  address: string;
+  contactNumber: string;
+  products: [{ product: string; quantity: number }];
   totalPrice: number;
+  status: string;
 }
 
 export interface OrderModel extends Model<IOrder> {
