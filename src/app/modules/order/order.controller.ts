@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import catchAsync from "../../utils/catchAsync";
 import { OrderServices } from "./order..service";
 
 const createOrder = async (req: Request, res: Response) => {
@@ -19,6 +20,26 @@ const createOrder = async (req: Request, res: Response) => {
     });
   }
 };
+
+const verifyPayment = catchAsync(async (req, res) => {
+  try {
+    const order = await OrderServices.verifyPayment(
+      req.query.order_id as string
+    );
+
+    res.status(200).json({
+      status: true,
+      message: "Order verified successfully",
+      data: order,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      status: false,
+      message: err.message,
+      error: err,
+    });
+  }
+});
 
 const calculateRevenue = async (req: Request, res: Response) => {
   try {
@@ -117,6 +138,7 @@ const deleteAOrder = async (req: Request, res: Response) => {
 
 export const OrderControllers = {
   createOrder,
+  verifyPayment,
   calculateRevenue,
   getAllOrders,
   getOrderById,
