@@ -20,15 +20,6 @@ const createOrder = async (order: IOrder) => {
 
   const payment = await orderUtils.makePaymentAsync(shurjopayPayload);
 
-  if (payment?.transactionStatus) {
-    orderResult = await orderResult.updateOne({
-      transaction: {
-        id: payment.sp_order_id,
-        transactionStatus: payment.transactionStatus,
-      },
-    });
-  }
-
   return payment.checkout_url;
 };
 

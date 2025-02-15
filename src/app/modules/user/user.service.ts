@@ -64,9 +64,18 @@ const loginUser = async (payload: TLoginUser) => {
   };
 };
 
+const getAllUsers = async () => {
+  const result = await User.find({});
+
+  return {
+    result,
+  };
+};
+
 export const UserServices = {
   createUserIntoDb,
   loginUser,
+  getAllUsers,
 };
 
 /*
