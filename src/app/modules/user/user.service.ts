@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import httpStatus from "http-status";
 import jwt from "jsonwebtoken";
 import config from "../../config";
@@ -30,6 +29,7 @@ const createUserIntoDb = async (user: Partial<IUser>) => {
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
   const user = await User.findOne({ email: payload?.email });
+  console.log(user);
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");
@@ -45,7 +45,7 @@ const loginUser = async (payload: TLoginUser) => {
 
   //checking if the password is correct
 
-  if (!(await bcrypt.compare(payload?.password, user?.password)))
+  if (payload?.password !== user?.password)
     throw new AppError(httpStatus.FORBIDDEN, "Password do not matched");
 
   //create token and sent to the  client
