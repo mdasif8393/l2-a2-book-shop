@@ -136,6 +136,25 @@ const deleteAOrder = async (req: Request, res: Response) => {
   }
 };
 
+const getUserOrder = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.params;
+
+    const result = await OrderServices.getUserOrder(email);
+    res.status(200).json({
+      status: true,
+      message: "User Orders Retrieved successfully",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      status: false,
+      message: err.message,
+      error: err,
+    });
+  }
+};
+
 export const OrderControllers = {
   createOrder,
   verifyPayment,
@@ -144,4 +163,5 @@ export const OrderControllers = {
   getOrderById,
   updateAOrder,
   deleteAOrder,
+  getUserOrder,
 };

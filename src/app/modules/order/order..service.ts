@@ -99,6 +99,11 @@ const deleteAOrder = async (productId: string) => {
   return result;
 };
 
+const getUserOrder = async (email: string) => {
+  const result = await Order.find({ email: email });
+  return result;
+};
+
 export const OrderServices = {
   createOrder,
   verifyPayment,
@@ -107,4 +112,5 @@ export const OrderServices = {
   getOrderById,
   updateAOrder,
   deleteAOrder,
+  getUserOrder,
 };
