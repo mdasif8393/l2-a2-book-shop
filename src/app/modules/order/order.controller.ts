@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
-import { OrderServices } from "./order..service";
+import { OrderServices } from "./order.service";
 
 const createOrder = async (req: Request, res: Response) => {
   try {

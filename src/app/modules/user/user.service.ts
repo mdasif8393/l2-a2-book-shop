@@ -14,13 +14,13 @@ const createUserIntoDb = async (user: Partial<IUser>) => {
     throw new AppError(httpStatus.BAD_REQUEST, "User already exists");
   }
 
-  // hash password before create user
-  const hashedPassword = await bcrypt.hash(
-    user?.password as string,
-    Number(config.bcrypt_salt_rounds)
-  );
+  // // hash password before create user
+  // const hashedPassword = await bcrypt.hash(
+  //   user?.password as string,
+  //   Number(config.bcrypt_salt_rounds)
+  // );
 
-  user.password = hashedPassword;
+  // user.password = hashedPassword;
 
   const result = await User.create(user);
 
@@ -64,6 +64,12 @@ const loginUser = async (payload: TLoginUser) => {
   };
 };
 
+// const getSingleUser = async (email: string) => {
+//   const result = await User.findOne({ email: email });
+
+//   return result;
+// };
+
 const getAllUsers = async () => {
   const result = await User.find({});
 
@@ -72,10 +78,21 @@ const getAllUsers = async () => {
   };
 };
 
+const updateUser = async (_id: string, user: any) => {
+  const result = await User.findOneAndUpdate({ _id }, user, {
+    runValidators: true,
+    new: true,
+  });
+
+  return result;
+};
+
 export const UserServices = {
   createUserIntoDb,
   loginUser,
   getAllUsers,
+  updateUser,
+  // getSingleUser,
 };
 
 /*
