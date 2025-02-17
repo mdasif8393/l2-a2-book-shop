@@ -29,7 +29,6 @@ const createUserIntoDb = async (user: Partial<IUser>) => {
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
   const user = await User.findOne({ email: payload?.email });
-  console.log(user);
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");
@@ -55,9 +54,13 @@ const loginUser = async (payload: TLoginUser) => {
     role: user.role,
   };
 
-  const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
-    expiresIn: config.jwt_access_expires_in,
-  });
+  const accessToken = jwt.sign(
+    jwtPayload as any,
+    config.jwt_access_secret as any,
+    {
+      expiresIn: config.jwt_access_expires_in as any,
+    }
+  );
 
   return {
     accessToken,
