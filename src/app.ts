@@ -10,7 +10,12 @@ const app: Application = express();
 
 // parser
 app.use(express.json());
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+app.use(
+  cors({
+    origin: ["https://l2-a4-book-shop-frontend.vercel.app/"],
+    credentials: true,
+  })
+);
 
 // router
 app.use("/api/products", BookRoutes);
