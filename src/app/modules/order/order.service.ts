@@ -3,22 +3,31 @@ import { IOrder } from "./order.interface";
 import { Order } from "./order.model";
 import { orderUtils } from "./order.utils";
 
-const createOrder = async (order: IOrder) => {
-  let orderResult = await Order.create(order);
+const createOrder = async (payload: IOrder) => {
+  let order = await Order.create(payload);
 
   const shurjopayPayload = {
-    amount: order?.totalPrice,
-    order_id: orderResult._id,
+    amount: payload?.totalPrice,
+    order_id: order._id,
     currency: "BDT",
-    customer_name: order?.name,
-    customer_address: order?.address,
-    customer_email: order?.email,
-    customer_phone: order.contactNumber,
+    customer_name: payload?.name,
+    customer_address: payload?.address,
+    customer_email: payload?.email,
+    customer_phone: payload.contactNumber,
     customer_city: "Dhaka",
     client_ip: "192.168.1.10",
   };
 
   const payment = await orderUtils.makePaymentAsync(shurjopayPayload);
+
+  if (payment?.transactionStatus) {
+    order = await order.updateOne({
+      transaction: {
+        id: payment.sp_order_id,
+        transactionStatus: payment.transactionStatus,
+      },
+    });
+  }
 
   return payment.checkout_url;
 };
@@ -40,11 +49,11 @@ const verifyPayment = async (order_id: string) => {
         "transaction.date_time": verifiedPayment[0].date_time,
         status:
           verifiedPayment[0].bank_status == "Success"
-            ? "Paid"
+            ? "paid"
             : verifiedPayment[0].bank_status == "Failed"
-            ? "Pending"
+            ? "pending"
             : verifiedPayment[0].bank_status == "Cancel"
-            ? "Cancelled"
+            ? "cancelled"
             : "",
       }
     );

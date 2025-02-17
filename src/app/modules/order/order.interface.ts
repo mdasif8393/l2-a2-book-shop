@@ -8,6 +8,15 @@ export interface IOrder {
   products: [{ product: string; quantity: number }];
   totalPrice: number;
   status: string;
+  transaction: {
+    id: string;
+    transactionStatus: string;
+    bank_status: string;
+    sp_code: string;
+    sp_message: string;
+    method: string;
+    date_time: string;
+  };
 }
 
 export interface OrderModel extends Model<IOrder> {
