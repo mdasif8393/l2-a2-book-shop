@@ -12,7 +12,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://a2-book-shop.vercel.app",
     credentials: true,
   })
 );
