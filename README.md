@@ -1,4 +1,4 @@
-﻿﻿# Live Link: https://a2-book-shop.vercel.app/
+﻿﻿# Live Link: https://l2-a2-book-shop-backend.vercel.app
 
 ## Level 2 Assignment 2
 
